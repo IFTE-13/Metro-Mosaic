@@ -1609,6 +1609,57 @@ void updateLaserObjects(int value) {
     glutTimerFunc(50, updateLaserObjects, 0);
 }
 
+/// SignBoard Building Two
+void SignBoard2(float x, float y, Color body = {211, 0, 253}, Color light = {111, 81, 143}){
+    /// Poles
+    polygon({{x + 0, y + 0}, {x + 30, y + 0}, {x + 30, y + 5}, {x + 0, y + 5}}, {22, 28, 40});
+    polygon({{x + 0, y + 5}, {x + 30, y + 5}, {x + 30, y + 35}, {x + 0, y + 35}}, {53, 59, 107});
+    polygon({{x + 0, y + 35}, {x + 30, y + 35}, {x + 30, y + 40}, {x + 0, y + 40}}, {22, 28, 40});
+
+    /// Body
+    polygon({{x - 10 , y - 10}, {x + 15, y - 10}, {x + 15, y + 50}, {x - 10, y + 50}}, body);
+    polygon({{x - 5 , y + 50}, {x + 10, y + 50}, {x + 10, y + 55}, {x - 5, y + 55}}, body);
+    polygon({{x - 5 , y - 15}, {x + 10, y - 15}, {x + 10, y - 10}, {x - 5, y - 10}}, body);
+
+    /// Light
+    polygon({{x - 15 , y - 10}, {x - 10, y - 10}, {x - 10, y + 50}, {x - 15, y + 50}}, light);
+    polygon({{x + 15 , y - 10}, {x + 20, y - 10}, {x + 20, y + 50}, {x + 15, y + 50}}, light);
+    polygon({{x - 10 , y + 50}, {x - 5, y + 50}, {x - 5, y + 55}, {x - 10, y + 55}}, light);
+    polygon({{x + 10 , y + 50}, {x + 15, y + 50}, {x + 15, y + 55}, {x + 10, y + 55}}, light);
+    polygon({{x - 5 , y + 55}, {x + 10, y + 55}, {x + 10, y + 60}, {x - 5, y + 60}}, light);
+    polygon({{x - 5 , y - 20}, {x + 10, y - 20}, {x + 10, y - 15}, {x - 5, y - 15}}, light);
+    polygon({{x - 10 , y - 15}, {x - 5, y - 15}, {x - 5, y - 10}, {x - 10, y - 10}}, light);
+    polygon({{x + 10 , y - 15}, {x + 15, y - 15}, {x + 15, y - 10}, {x + 10, y - 10}}, light);
+
+    /// Objects
+    polygon({{x - 5 , y + 0}, {x + 10, y + 0}, {x + 10, y + 5}, {x - 5, y + 5}}, light);
+    polygon({{x - 5 , y + 35}, {x + 10, y + 35}, {x + 10, y + 40}, {x - 5, y + 40}}, light);
+    polygon({{x - 5 , y + 15}, {x + 10, y + 15}, {x + 10, y + 20}, {x - 5, y + 20}}, light);
+    polygon({{x + 0 , y + 20}, {x + 10, y + 20}, {x + 10, y + 25}, {x + 0, y + 25}}, light);
+}
+
+/// SignBoard Building Thirteen
+void SignBoard13(float x, float y, Color light = {110, 115, 153}){
+    /// Poles
+    polygon({{x + 0, y + 0}, {x + 30, y + 0}, {x + 30, y + 5}, {x + 0, y + 5}}, {22, 28, 40});
+    polygon({{x + 0, y + 5}, {x + 30, y + 5}, {x + 30, y + 35}, {x + 0, y + 35}}, {53, 59, 107});
+    polygon({{x + 0, y + 35}, {x + 30, y + 35}, {x + 30, y + 40}, {x + 0, y + 40}}, {22, 28, 40});
+
+    /// Body
+    polygon({{x - 10 , y - 10}, {x + 15, y - 10}, {x + 15, y + 50}, {x - 10, y + 50}}, {0, 252, 161});
+
+    /// Light
+    polygon({{x - 15 , y - 5}, {x - 10, y - 5}, {x - 10, y + 50}, {x - 15, y + 50}}, light);
+    polygon({{x + 15 , y - 5}, {x + 20, y - 5}, {x + 20, y + 50}, {x + 15, y + 50}}, light);
+    polygon({{x - 10 , y + 50}, {x + 15, y + 50}, {x + 15, y + 55}, {x - 10, y + 55}}, light);
+    polygon({{x - 10 , y - 10}, {x + 15, y - 10}, {x + 15, y - 5}, {x - 10, y - 5}}, light);
+
+    /// Lower Object
+    polygon({{x - 10 , y - 10}, {x + 15, y - 10}, {x + 15, y + 10}, {x + 10, y + 10}, {x + 10, y + 5}, {x - 10, y + 5}}, {46, 0, 251});
+    polygon({{x - 10 , y + 30}, {x + 15, y + 30}, {x + 15, y + 40}, {x + 10, y + 40}, {x + 10, y + 25}, {x - 10, y + 25}}, {114, 195, 204});
+}
+
+
 
 /// Initializing all Clouds
 void drawClouds(){
@@ -1738,6 +1789,10 @@ void display()
 
     /// Buildings Window Light Toggle
     LightOnOff();
+
+    /// Signboard for Building Two and Thirteen
+    SignBoard2(185, 335);
+    SignBoard13(1705, 315);
 
     glFlush();
     glutSwapBuffers();
