@@ -8,7 +8,7 @@
 using namespace std;
 
 /// Boolean Variables
-bool day = false, night = true, signBoard = false;
+bool day = false, night = true, signBoard = false, on = true;
 
 /// Float Variables for Translation
 float cloudTime1 = 0;
@@ -471,8 +471,82 @@ void Building_One(float x, float y, int m = 1, Color Pillar = {135, 82, 214}, Co
     /// Terrace
     polygon({{x + 0, y + 245}, {x + 75, y + 245}, {x + 75, y + 250}, {x + 0, y + 250}}, Pillar);
     polygon({{x + 75, y + 245}, {x + 145, y + 245}, {x + 145, y + 250}, {x + 75, y + 250}}, DarkPillar);
+}
 
+/// Timer Function for making the First Building's Window Color Toggle
+int i, j, k= 0;
+bool two, three = true;
+void updateLights(int value) {
 
+    if(on && i < 10){
+        on = false;
+        i += 0.5;
+    }
+    else{
+        on = true;
+        i = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(2000, updateLights, 0);
+}
+
+void updateLights2(int value) {
+
+    if(on && j < 1){
+        two = false;
+        j += 1;
+    }
+    else{
+        two = true;
+        j = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(500, updateLights2, 0);
+}
+
+void updateLights3(int value) {
+
+    if(on && k < 1){
+        three = false;
+        k += 1;
+    }
+    else{
+        three = true;
+        k = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(1000, updateLights3, 0);
+}
+
+void LightOnOff(){
+    if(night){
+        if(on) {
+            polygon({{30, 80}, {40, 80}, {40, 100}, {30, 100}}, {28, 0, 149});
+            polygon({{85, 255 + 200}, {98, 255 + 200}, {98, 255 + 220}, {85, 255 + 220}}, {28, 0, 149});
+            polygon({{420 + 5, 340}, {420 + 65, 340}, {420 + 65, 360}, {420 +  5, 360}}, {43, 71, 136});
+            polygon({{420 + 5, 360}, {420 + 65, 360}, {420 + 65, 370}, {420 + 5, 370}}, {61, 56, 130});
+            polygon({{930 + 100, 255 + 185}, {930 + 110, 255 + 185}, {930 + 110, 255 + 200}, {930 + 100, 255 + 200}}, {34, 203, 197});
+            polygon({{930 + 120, 255 + 185}, {930 + 130, 255 + 185}, {930 + 130, 255 + 200}, {930 + 120, 255 + 200}}, {34, 203, 197});
+            polygon({{930 + 120, 255 + 155}, {930 + 130, 255 + 155}, {930 + 130, 255 + 170}, {930 + 120, 255 + 170}}, {34, 203, 197});
+        }
+        if(two){
+            polygon({{30, 255 + 80}, {40, 255 + 80}, {40, 255 + 100}, {30, 255 + 100}}, {28, 0, 149});
+            polygon({{320 + 10, 40}, {320 + 15, 40}, {320 + 15, 46}, {320 + 10, 46}}, {34, 203, 197});
+            polygon({{320 + 25, 40}, {320 + 30, 40}, {320 + 30, 46}, {320 + 25, 46}}, {34, 203, 197});
+            polygon({{320 + 50, 40}, {320 + 55, 40}, {320 + 55, 46}, {320 + 50, 46}}, {34, 203, 197});
+            polygon({{1720 + 87, 290}, {1720 + 98, 290}, {1720 + 98, 310}, {1720 + 87, 310}}, {28, 0, 149});
+        }
+        if(three){
+            polygon({{1850 + 10, 40}, {1850 + 15, 40}, {1850 + 15, 46}, {1850 + 10, 46}}, {34, 203, 197});
+            polygon({{1850 + 25, 40}, {1850 + 30, 40}, {1850 + 30, 46}, {1850 + 25, 46}}, {34, 203, 197});
+            polygon({{520 + 10, 70}, {520 + 20, 70}, {520 + 20, 85}, {520 + 10, 85}}, {34, 203, 197});
+            polygon({{520 + 10, 40}, {520 + 20, 40}, {520 + 20, 55}, {520 + 10, 55}}, {34, 203, 197});
+            polygon({{1720 + 117, 320}, {1720 + 127, 320}, {1720 + 127, 340}, {1720 + 117, 340}}, {28, 0, 149});
+        }
+    }
 }
 
 /// Signboard's Ghost
@@ -594,11 +668,269 @@ void Building_One_Terrace(float x, float y){
     NetworkTower(x + 20, y + 10);
 }
 
-void LaserObjects(float x, float y, Color body = {97, 252, 254}){
-    polygon({{x + 20, y + 10 + objectPositionY}, {x + 25, y + 10 + objectPositionY}, {x + 25, y + 15 + objectPositionY}, {x + 20, y + 15 + objectPositionY}}, body);
-    polygon({{x + 30, y + 20 - objectPositionY}, {x + 35, y + 20 - objectPositionY}, {x + 35, y + 25 - objectPositionY}, {x + 30, y + 25 - objectPositionY}}, body);
-    polygon({{x + 25, y + 40 + objectPositionY}, {x + 30, y + 40 + objectPositionY}, {x + 30, y + 45 + objectPositionY}, {x + 25, y + 45 + objectPositionY}}, body);
-    polygon({{x + 20, y + 50 - objectPositionY}, {x + 25, y + 50 - objectPositionY}, {x + 25, y + 55 - objectPositionY}, {x + 20, y + 55 - objectPositionY}}, body);
+/// Building Two
+void Building_Two(float x, float y, int m = 1){
+    if(night){
+        /// Base
+        polygon({{x + 0, y + 0}, {x + 70, y + 0}, {x + 70, y + 10}, {x + 0, y + 10}}, {49, 33, 196});
+        polygon({{x + 70, y + 0}, {x + 140, y + 0}, {x + 140, y + 10}, {x + 70, y + 10}}, {29, 1, 50});
+
+        /// First Floor
+        polygon({{x + 0, y + 10}, {x + 70, y + 10}, {x + 70, y + 20}, {x + 0, y + 20}}, {22, 37, 128});
+        polygon({{x + 0, y + 20}, {x + 70, y + 20}, {x + 70, y + 30}, {x + 0, y + 30}}, {33, 25, 108});
+
+        polygon({{x + 70, y + 10}, {x + 140, y + 10}, {x + 140, y + 20}, {x + 70, y + 20}}, {49, 0, 49});
+        polygon({{x + 70, y + 20}, {x + 140, y + 20}, {x + 140, y + 30}, {x + 70, y + 30}}, {41, 0, 54});
+
+        /// Second Floor
+        polygon({{x + 0, y + 30}, {x + 70, y + 30}, {x + 70, y + 40}, {x + 0, y + 40}}, {48, 38, 193});
+        polygon({{x + 70, y + 30}, {x + 140, y + 30}, {x + 140, y + 40}, {x + 70, y + 40}}, {36, 0, 51});
+
+        polygon({{x + 0, y + 40}, {x + 70, y + 40}, {x + 70, y + 50}, {x + 0, y + 50}}, {22, 37, 128});
+        polygon({{x + 0, y + 50}, {x + 70, y + 50}, {x + 70, y + 60}, {x + 0, y + 60}}, {33, 25, 108});
+
+        polygon({{x + 70, y + 40}, {x + 140, y + 40}, {x + 140, y + 50}, {x + 70, y + 50}}, {49, 0, 49});
+        polygon({{x + 70, y + 50}, {x + 140, y + 50}, {x + 140, y + 60}, {x + 70, y + 60}}, {41, 0, 54});
+
+        /// Third Floor
+        polygon({{x + 0, y + 60}, {x + 70, y + 60}, {x + 70, y + 70}, {x + 0, y + 70}}, {48, 38, 193});
+        polygon({{x + 70, y + 60}, {x + 140, y + 60}, {x + 140, y + 70}, {x + 70, y + 70}}, {27, 2, 50});
+
+        polygon({{x + 0, y + 70}, {x + 70, y + 70}, {x + 70, y + 80}, {x + 0, y + 80}}, {22, 37, 128});
+        polygon({{x + 0, y + 80}, {x + 70, y + 80}, {x + 70, y + 90}, {x + 0, y + 90}}, {33, 25, 108});
+
+        polygon({{x + 70, y + 70}, {x + 140, y + 70}, {x + 140, y + 80}, {x + 70, y + 80}}, {49, 0, 49});
+        polygon({{x + 70, y + 80}, {x + 140, y + 80}, {x + 140, y + 90}, {x + 70, y + 90}}, {41, 0, 54});
+
+        /// Middle Portion
+        polygon({{x + 0, y + 90}, {x + 70, y + 90}, {x + 70, y + 100}, {x + 0, y + 100}}, {77, 50, 202});
+        polygon({{x + 70, y + 90}, {x + 140, y + 90}, {x + 140, y + 100}, {x + 70, y + 100}}, {43, 17, 78});
+
+        polygon({{x + 0, y + 100}, {x + 140, y + 100}, {x + 140, y + 110}, {x + 0, y + 110}}, {27, 2, 50});
+
+        polygon({{x + 0, y + 110}, {x + 70, y + 110}, {x + 70, y + 125}, {x + 0, y + 125}}, {77, 50, 202});
+        polygon({{x + 70, y + 110}, {x + 140, y + 110}, {x + 140, y + 125}, {x + 70, y + 125}}, {43, 17, 78});
+
+        /// Fourth Floor
+        polygon({{x + 0, y + 125}, {x + 70, y + 125}, {x + 70, y + 135}, {x + 0, y + 135}}, {29, 53, 142});
+        polygon({{x + 0, y + 135}, {x + 70, y + 135}, {x + 70, y + 145}, {x + 0, y + 145}}, {40, 24, 106});
+
+        polygon({{x + 70, y + 125}, {x + 140, y + 125}, {x + 140, y + 145}, {x + 70, y + 145}}, {33, 11, 58});
+
+        /// Fifth Floor
+        polygon({{x + 0, y + 145}, {x + 70, y + 145}, {x + 70, y + 155}, {x + 0, y + 155}}, {36, 50, 127});
+        polygon({{x + 70, y + 145}, {x + 140, y + 145}, {x + 140, y + 155}, {x + 70, y + 155}}, {40, 24, 106});
+
+        polygon({{x + 0, y + 155}, {x + 70, y + 155}, {x + 70, y + 165}, {x + 0, y + 165}}, {29, 53, 142});
+        polygon({{x + 0, y + 165}, {x + 70, y + 165}, {x + 70, y + 175}, {x + 0, y + 175}}, {40, 24, 106});
+
+        polygon({{x + 70, y + 155}, {x + 140, y + 155}, {x + 140, y + 175}, {x + 70, y + 175}}, {33, 11, 58});
+
+        /// Sixth Floor
+        polygon({{x + 0, y + 175}, {x + 70, y + 175}, {x + 70, y + 185}, {x + 0, y + 185}}, {36, 50, 127});
+        polygon({{x + 70, y + 175}, {x + 140, y + 175}, {x + 140, y + 185}, {x + 70, y + 185}}, {40, 24, 106});
+
+        polygon({{x + 0, y + 185}, {x + 70, y + 185}, {x + 70, y + 195}, {x + 0, y + 195}}, {29, 53, 142});
+        polygon({{x + 0, y + 195}, {x + 70, y + 195}, {x + 70, y + 205}, {x + 0, y + 205}}, {40, 24, 106});
+
+        polygon({{x + 70, y + 185}, {x + 140, y + 185}, {x + 140, y + 205}, {x + 70, y + 205}}, {33, 11, 58});
+
+        /// First Floor's Windows
+        polygon({{x + 10, y + 10}, {x + 20, y + 10}, {x + 20, y + 25}, {x + 10, y + 25}}, {5, 67, 157});
+        polygon({{x + 30, y + 10}, {x + 40, y + 10}, {x + 40, y + 25}, {x + 30, y + 25}}, {34, 203, 197});
+        polygon({{x + 50, y + 10}, {x + 60, y + 10}, {x + 60, y + 25}, {x + 50, y + 25}}, {5, 67, 157});
+
+        polygon({{x + 80, y + 10}, {x + 90, y + 10}, {x + 90, y + 25}, {x + 80, y + 25}}, {29, 18, 90});
+        polygon({{x + 100, y + 10}, {x + 110, y + 10}, {x + 110, y + 25}, {x + 100, y + 25}}, {29, 18, 90});
+        polygon({{x + 120, y + 10}, {x + 130, y + 10}, {x + 130, y + 25}, {x + 120, y + 25}}, {29, 18, 90});
+
+        /// Second Floor's Windows
+        polygon({{x + 10, y + 40}, {x + 20, y + 40}, {x + 20, y + 55}, {x + 10, y + 55}}, {5, 67, 157});
+        polygon({{x + 30, y + 40}, {x + 40, y + 40}, {x + 40, y + 55}, {x + 30, y + 55}}, {34, 203, 197});
+        polygon({{x + 50, y + 40}, {x + 60, y + 40}, {x + 60, y + 55}, {x + 50, y + 55}}, {39, 80, 92});
+
+        polygon({{x + 80, y + 40}, {x + 90, y + 40}, {x + 90, y + 55}, {x + 80, y + 55}}, {39, 80, 92});
+        polygon({{x + 100, y + 40}, {x + 110, y + 40}, {x + 110, y + 55}, {x + 100, y + 55}}, {39, 80, 92});
+        polygon({{x + 120, y + 40}, {x + 130, y + 40}, {x + 130, y + 55}, {x + 120, y + 55}}, {5, 67, 157});
+
+        /// Third Floor's Windows
+        polygon({{x + 10, y + 70}, {x + 20, y + 70}, {x + 20, y + 85}, {x + 10, y + 85}}, {5, 67, 157});
+        polygon({{x + 30, y + 70}, {x + 40, y + 70}, {x + 40, y + 85}, {x + 30, y + 85}}, {34, 203, 197});
+        polygon({{x + 50, y + 70}, {x + 60, y + 70}, {x + 60, y + 85}, {x + 50, y + 85}}, {5, 67, 157});
+
+        polygon({{x + 80, y + 70}, {x + 90, y + 70}, {x + 90, y + 85}, {x + 80, y + 85}}, {34, 203, 197});
+        polygon({{x + 100, y + 70}, {x + 110, y + 70}, {x + 110, y + 85}, {x + 100, y + 85}}, {25, 67, 157});
+        polygon({{x + 120, y + 70}, {x + 130, y + 70}, {x + 130, y + 85}, {x + 120, y + 85}}, {5, 67, 157});
+
+        /// Fourth Floor's Windows
+        polygon({{x + 10, y + 125}, {x + 20, y + 125}, {x + 20, y + 140}, {x + 10, y + 140}}, {5, 67, 157});
+        polygon({{x + 30, y + 125}, {x + 40, y + 125}, {x + 40, y + 140}, {x + 30, y + 140}}, {34, 203, 197});
+        polygon({{x + 50, y + 125}, {x + 60, y + 125}, {x + 60, y + 140}, {x + 50, y + 140}}, {5, 67, 157});
+
+        polygon({{x + 80, y + 125}, {x + 90, y + 125}, {x + 90, y + 140}, {x + 80, y + 140}}, {5, 67, 157});
+        polygon({{x + 100, y + 125}, {x + 110, y + 125}, {x + 110, y + 140}, {x + 100, y + 140}}, {5, 67, 157});
+        polygon({{x + 120, y + 125}, {x + 130, y + 125}, {x + 130, y + 140}, {x + 120, y + 140}}, {5, 67, 157});
+
+        /// Fifth Floor's Windows
+        polygon({{x + 10, y + 155}, {x + 20, y + 155}, {x + 20, y + 170}, {x + 10, y + 170}}, {34, 203, 197});
+        polygon({{x + 30, y + 155}, {x + 40, y + 155}, {x + 40, y + 170}, {x + 30, y + 170}}, {34, 203, 197});
+        polygon({{x + 50, y + 155}, {x + 60, y + 155}, {x + 60, y + 170}, {x + 50, y + 170}}, {51, 111, 188});
+
+        polygon({{x + 80, y + 155}, {x + 90, y + 155}, {x + 90, y + 170}, {x + 80, y + 170}}, {5, 67, 157});
+        polygon({{x + 100, y + 155}, {x + 110, y + 155}, {x + 110, y + 170}, {x + 100, y + 170}}, {5, 67, 157});
+        polygon({{x + 120, y + 155}, {x + 130, y + 155}, {x + 130, y + 170}, {x + 120, y + 170}}, {5, 67, 157});
+
+        /// Sixth Floor's Windows
+        polygon({{x + 10, y + 185}, {x + 20, y + 185}, {x + 20, y + 200}, {x + 10, y + 200}}, {34, 203, 197});
+        polygon({{x + 30, y + 185}, {x + 40, y + 185}, {x + 40, y + 200}, {x + 30, y + 200}}, {34, 203, 197});
+        polygon({{x + 50, y + 185}, {x + 60, y + 185}, {x + 60, y + 200}, {x + 50, y + 200}}, {51, 111, 188});
+
+        polygon({{x + 80, y + 185}, {x + 90, y + 185}, {x + 90, y + 200}, {x + 80, y + 200}}, {51, 111, 188});
+        polygon({{x + 100, y + 185}, {x + 110, y + 185}, {x + 110, y + 200}, {x + 100, y + 200}}, {51, 111, 188});
+        polygon({{x + 120, y + 185}, {x + 130, y + 185}, {x + 130, y + 200}, {x + 120, y + 200}}, {51, 111, 188});
+
+        /// Terrace
+        polygon({{x + 0, y + 205}, {x + 70, y + 205}, {x + 70, y + 220}, {x + 0, y + 220}}, {123, 82, 198});
+        polygon({{x + 70, y + 205}, {x + 140, y + 205}, {x + 140, y + 220}, {x + 70, y + 220}}, {16, 40, 59});
+    }
+    else if(day){
+        Color WhiteOne = {245, 204, 160};
+        Color WhiteTwo = {153, 77, 28};
+        Color GrayOne = {228, 143, 69};
+        Color GrayTwo = {107, 36, 12};
+        Color GrayThree = {107, 36, 12};
+        Color WindowTypeOne = {251, 139, 36};
+        Color WindowTypeTwo = {227, 100, 20};
+        /// Base
+        polygon({{x + 0, y + 0}, {x + 70, y + 0}, {x + 70, y + 10}, {x + 0, y + 10}}, WhiteOne);
+        polygon({{x + 70, y + 0}, {x + 140, y + 0}, {x + 140, y + 10}, {x + 70, y + 10}}, GrayOne);
+
+        /// First Floor
+        polygon({{x + 0, y + 10}, {x + 70, y + 10}, {x + 70, y + 20}, {x + 0, y + 20}}, WhiteTwo);
+        polygon({{x + 0, y + 20}, {x + 70, y + 20}, {x + 70, y + 30}, {x + 0, y + 30}}, GrayTwo);
+
+        polygon({{x + 70, y + 10}, {x + 140, y + 10}, {x + 140, y + 30}, {x + 70, y + 30}}, GrayThree);
+
+        /// Second Floor
+        polygon({{x + 0, y + 30}, {x + 70, y + 30}, {x + 70, y + 40}, {x + 0, y + 40}}, WhiteOne);
+        polygon({{x + 70, y + 30}, {x + 140, y + 30}, {x + 140, y + 40}, {x + 70, y + 40}}, GrayOne);
+
+        polygon({{x + 0, y + 40}, {x + 70, y + 40}, {x + 70, y + 50}, {x + 0, y + 50}}, WhiteTwo);
+        polygon({{x + 0, y + 50}, {x + 70, y + 50}, {x + 70, y + 60}, {x + 0, y + 60}}, GrayTwo);
+
+        polygon({{x + 70, y + 40}, {x + 140, y + 40}, {x + 140, y + 60}, {x + 70, y + 60}}, GrayThree);
+
+        /// Third Floor
+        polygon({{x + 0, y + 60}, {x + 70, y + 60}, {x + 70, y + 70}, {x + 0, y + 70}}, WhiteOne);
+        polygon({{x + 70, y + 60}, {x + 140, y + 60}, {x + 140, y + 70}, {x + 70, y + 70}}, GrayOne);
+
+        polygon({{x + 0, y + 70}, {x + 70, y + 70}, {x + 70, y + 80}, {x + 0, y + 80}}, WhiteTwo);
+        polygon({{x + 0, y + 80}, {x + 70, y + 80}, {x + 70, y + 90}, {x + 0, y + 90}}, GrayTwo);
+
+        polygon({{x + 70, y + 70}, {x + 140, y + 70}, {x + 140, y + 90}, {x + 70, y + 90}}, GrayThree);
+
+        /// Middle Portion
+        polygon({{x + 0, y + 90}, {x + 70, y + 90}, {x + 70, y + 100}, {x + 0, y + 100}}, WhiteOne);
+        polygon({{x + 70, y + 90}, {x + 140, y + 90}, {x + 140, y + 100}, {x + 70, y + 100}}, GrayOne);
+
+        polygon({{x + 0, y + 100}, {x + 140, y + 100}, {x + 140, y + 110}, {x + 0, y + 110}}, {27, 2, 50});
+
+        polygon({{x + 0, y + 110}, {x + 70, y + 110}, {x + 70, y + 125}, {x + 0, y + 125}}, WhiteOne);
+        polygon({{x + 70, y + 110}, {x + 140, y + 110}, {x + 140, y + 125}, {x + 70, y + 125}}, GrayOne);
+
+        /// Fourth Floor
+        polygon({{x + 0, y + 125}, {x + 70, y + 125}, {x + 70, y + 135}, {x + 0, y + 135}}, WhiteTwo);
+        polygon({{x + 0, y + 135}, {x + 70, y + 135}, {x + 70, y + 145}, {x + 0, y + 145}}, GrayTwo);
+
+        polygon({{x + 70, y + 125}, {x + 140, y + 125}, {x + 140, y + 145}, {x + 70, y + 145}}, GrayThree);
+
+        /// Fifth Floor
+        polygon({{x + 0, y + 145}, {x + 70, y + 145}, {x + 70, y + 155}, {x + 0, y + 155}}, WhiteOne);
+        polygon({{x + 70, y + 145}, {x + 140, y + 145}, {x + 140, y + 155}, {x + 70, y + 155}}, GrayOne);
+
+        polygon({{x + 0, y + 155}, {x + 70, y + 155}, {x + 70, y + 165}, {x + 0, y + 165}}, WhiteTwo);
+        polygon({{x + 0, y + 165}, {x + 70, y + 165}, {x + 70, y + 175}, {x + 0, y + 175}}, GrayTwo);
+
+        polygon({{x + 70, y + 155}, {x + 140, y + 155}, {x + 140, y + 175}, {x + 70, y + 175}}, GrayThree);
+
+        /// Sixth Floor
+        polygon({{x + 0, y + 175}, {x + 70, y + 175}, {x + 70, y + 185}, {x + 0, y + 185}}, WhiteOne);
+        polygon({{x + 70, y + 175}, {x + 140, y + 175}, {x + 140, y + 185}, {x + 70, y + 185}}, GrayOne);
+
+        polygon({{x + 0, y + 185}, {x + 70, y + 185}, {x + 70, y + 195}, {x + 0, y + 195}}, WhiteTwo);
+        polygon({{x + 0, y + 195}, {x + 70, y + 195}, {x + 70, y + 205}, {x + 0, y + 205}}, GrayTwo);
+
+        polygon({{x + 70, y + 185}, {x + 140, y + 185}, {x + 140, y + 205}, {x + 70, y + 205}}, GrayThree);
+
+        /// First Floor's Windows
+        polygon({{x + 10, y + 10}, {x + 20, y + 10}, {x + 20, y + 25}, {x + 10, y + 25}}, WindowTypeTwo);
+        polygon({{x + 30, y + 10}, {x + 40, y + 10}, {x + 40, y + 25}, {x + 30, y + 25}}, WindowTypeOne);
+        polygon({{x + 50, y + 10}, {x + 60, y + 10}, {x + 60, y + 25}, {x + 50, y + 25}}, WindowTypeTwo);
+
+        polygon({{x + 80, y + 10}, {x + 90, y + 10}, {x + 90, y + 25}, {x + 80, y + 25}}, WindowTypeTwo);
+        polygon({{x + 100, y + 10}, {x + 110, y + 10}, {x + 110, y + 25}, {x + 100, y + 25}}, WindowTypeTwo);
+        polygon({{x + 120, y + 10}, {x + 130, y + 10}, {x + 130, y + 25}, {x + 120, y + 25}}, WindowTypeTwo);
+
+        /// Second Floor's Windows
+        polygon({{x + 10, y + 40}, {x + 20, y + 40}, {x + 20, y + 55}, {x + 10, y + 55}}, WindowTypeTwo);
+        polygon({{x + 30, y + 40}, {x + 40, y + 40}, {x + 40, y + 55}, {x + 30, y + 55}}, WindowTypeOne);
+        polygon({{x + 50, y + 40}, {x + 60, y + 40}, {x + 60, y + 55}, {x + 50, y + 55}}, WindowTypeTwo);
+
+        polygon({{x + 80, y + 40}, {x + 90, y + 40}, {x + 90, y + 55}, {x + 80, y + 55}}, WindowTypeTwo);
+        polygon({{x + 100, y + 40}, {x + 110, y + 40}, {x + 110, y + 55}, {x + 100, y + 55}}, WindowTypeTwo);
+        polygon({{x + 120, y + 40}, {x + 130, y + 40}, {x + 130, y + 55}, {x + 120, y + 55}}, WindowTypeTwo);
+
+        /// Third Floor's Windows
+        polygon({{x + 10, y + 70}, {x + 20, y + 70}, {x + 20, y + 85}, {x + 10, y + 85}}, WindowTypeTwo);
+        polygon({{x + 30, y + 70}, {x + 40, y + 70}, {x + 40, y + 85}, {x + 30, y + 85}}, WindowTypeOne);
+        polygon({{x + 50, y + 70}, {x + 60, y + 70}, {x + 60, y + 85}, {x + 50, y + 85}}, WindowTypeTwo);
+
+        polygon({{x + 80, y + 70}, {x + 90, y + 70}, {x + 90, y + 85}, {x + 80, y + 85}}, WindowTypeTwo);
+        polygon({{x + 100, y + 70}, {x + 110, y + 70}, {x + 110, y + 85}, {x + 100, y + 85}}, WindowTypeTwo);
+        polygon({{x + 120, y + 70}, {x + 130, y + 70}, {x + 130, y + 85}, {x + 120, y + 85}}, WindowTypeTwo);
+
+        /// Fourth Floor's Windows
+        polygon({{x + 10, y + 125}, {x + 20, y + 125}, {x + 20, y + 140}, {x + 10, y + 140}}, WindowTypeTwo);
+        polygon({{x + 30, y + 125}, {x + 40, y + 125}, {x + 40, y + 140}, {x + 30, y + 140}}, WindowTypeOne);
+        polygon({{x + 50, y + 125}, {x + 60, y + 125}, {x + 60, y + 140}, {x + 50, y + 140}}, WindowTypeTwo);
+
+        polygon({{x + 80, y + 125}, {x + 90, y + 125}, {x + 90, y + 140}, {x + 80, y + 140}}, WindowTypeTwo);
+        polygon({{x + 100, y + 125}, {x + 110, y + 125}, {x + 110, y + 140}, {x + 100, y + 140}}, WindowTypeTwo);
+        polygon({{x + 120, y + 125}, {x + 130, y + 125}, {x + 130, y + 140}, {x + 120, y + 140}}, WindowTypeTwo);
+
+        /// Fifth Floor's Windows
+        polygon({{x + 10, y + 155}, {x + 20, y + 155}, {x + 20, y + 170}, {x + 10, y + 170}}, WindowTypeOne);
+        polygon({{x + 30, y + 155}, {x + 40, y + 155}, {x + 40, y + 170}, {x + 30, y + 170}}, WindowTypeOne);
+        polygon({{x + 50, y + 155}, {x + 60, y + 155}, {x + 60, y + 170}, {x + 50, y + 170}}, WindowTypeTwo);
+
+        polygon({{x + 80, y + 155}, {x + 90, y + 155}, {x + 90, y + 170}, {x + 80, y + 170}}, WindowTypeTwo);
+        polygon({{x + 100, y + 155}, {x + 110, y + 155}, {x + 110, y + 170}, {x + 100, y + 170}}, WindowTypeTwo);
+        polygon({{x + 120, y + 155}, {x + 130, y + 155}, {x + 130, y + 170}, {x + 120, y + 170}}, WindowTypeTwo);
+
+        /// Sixth Floor's Windows
+        polygon({{x + 10, y + 185}, {x + 20, y + 185}, {x + 20, y + 200}, {x + 10, y + 200}}, WindowTypeOne);
+        polygon({{x + 30, y + 185}, {x + 40, y + 185}, {x + 40, y + 200}, {x + 30, y + 200}}, WindowTypeOne);
+        polygon({{x + 50, y + 185}, {x + 60, y + 185}, {x + 60, y + 200}, {x + 50, y + 200}}, WindowTypeTwo);
+
+        polygon({{x + 80, y + 185}, {x + 90, y + 185}, {x + 90, y + 200}, {x + 80, y + 200}}, WindowTypeTwo);
+        polygon({{x + 100, y + 185}, {x + 110, y + 185}, {x + 110, y + 200}, {x + 100, y + 200}}, WindowTypeTwo);
+        polygon({{x + 120, y + 185}, {x + 130, y + 185}, {x + 130, y + 200}, {x + 120, y + 200}}, WindowTypeTwo);
+
+        /// Terrace
+        polygon({{x + 0, y + 205}, {x + 70, y + 205}, {x + 70, y + 220}, {x + 0, y + 220}}, WhiteOne);
+        polygon({{x + 70, y + 205}, {x + 140, y + 205}, {x + 140, y + 220}, {x + 70, y + 220}}, GrayOne);
+    }
+}
+
+/// Other Building's Network Tower
+void NetworkTowerTwo(float x, float y, Color shadow = {19, 23, 69}, Color light = {244, 29, 27}){
+
+    polygon({{x + 25, y}, {x + 100, y}, {x + 100, y + 10}, {x + 25, y + 10}}, shadow);
+    polygon({{x + 45, y}, {x + 80, y}, {x + 80, y + 25}, {x + 45, y + 25}}, shadow);
+    polygon({{x + 95, y}, {x + 100, y}, {x + 100, y + 25}, {x + 95, y + 25}}, shadow);
+    polygon({{x + 75, y}, {x + 80, y}, {x + 80, y + 40}, {x + 75, y + 40}}, shadow);
+
+    if(night) polygon({{x + 74, y + 40}, {x + 81, y + 40}, {x + 81, y + 47}, {x + 74, y + 47}}, light);
 }
 
 /// Initializing all Clouds
@@ -617,9 +949,22 @@ void Building(){
     Building_One_Terrace(-5, 510);
     SignBoard(-5, 510);
 
+    /// Building Two
+    Building_Two(100, 0);
+    NetworkTowerTwo(100, 220);
+
+    /// Building Six
+    Building_Two(520, 0);
+    NetworkTowerTwo(535, 220);
+
 
     /// Building Eight
     Building_One(700, 0);
+
+    /// Building Nine
+    //Eight_Building(900, 0);
+    Building_Two(930, 255);
+    NetworkTowerTwo(935, 475);
 
     /// Building Twelve
     Building_One(1380, 0);
@@ -654,8 +999,11 @@ void display()
     moveCarrer();
     moveCarrerTwo();
 
-    // Signboards
+    /// Signboards
     moveGhost();
+
+    /// Buildings Window Light Toggle
+    LightOnOff();
 
     glFlush();
     glutSwapBuffers();
@@ -690,6 +1038,9 @@ void updates(){
     glutTimerFunc(100, updateCarrierTwo, 0);
     glutTimerFunc(100, updateGhost, 0);
     glutTimerFunc(100, updateDonute, 0);
+    glutTimerFunc(100, updateLights, 0);
+    glutTimerFunc(100, updateLights2, 0);
+    glutTimerFunc(100, updateLights3, 0);
 }
 
 void init(void)
