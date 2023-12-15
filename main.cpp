@@ -1872,10 +1872,12 @@ void keyboard(unsigned char key, int x, int y){
     case 'd': /// for day
         day = true;
         night = false;
+        sndPlaySound("evening.wav", SND_ASYNC | SND_LOOP);
         break;
     case 'n': /// for night
         day = false;
         night = true;
+        sndPlaySound("night.wav", SND_ASYNC | SND_LOOP);
         break;
     case '1': /// for turning on signboard at night
         signBoard = true;
