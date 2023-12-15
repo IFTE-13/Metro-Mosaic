@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1702668619 source:c:\programming\c++\metro mosaic\main.cpp
+1702675171 source:c:\programming\c++\metro mosaic\main.cpp
 	<iostream>
 	<GL/freeglut.h>
 	<GL/gl.h>
 	<GL/glu.h>
 	<vector>
 	<math.h>
+	<windows.h>
+	<mmsystem.h>
 
 1697387017 c:\program files\codeblocks\mingw\x86_64-w64-mingw32\include\gl\freeglut.h
 	"freeglut_std.h"

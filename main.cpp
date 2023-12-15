@@ -4,11 +4,13 @@
 #include <GL/glu.h>
 #include <vector>
 #include <math.h>
+#include <windows.h>
+#include <mmsystem.h>
 
 using namespace std;
 
 /// Boolean Variables
-bool day = false, night = true, signBoard = false, on = true, laser = false;
+bool day = false, night = true, signBoard = false, on = true, laser = false, rain = false, rainSound = false;
 
 /// Float Variables for Translation
 float cloudTime1 = 0;
@@ -20,6 +22,7 @@ float GhostPosition = 1;
 float DonutePosition = 0;
 float objectPositionX = 0;
 float objectPositionY = 0;
+float rainPosition = 0;
 
 /// Defining Color for Objects
 struct Color
@@ -1188,7 +1191,7 @@ void Fifth_Building(float x, float y, int m = 1, Color buildingWall = {130, 86, 
     polygon({{x + m * 5, y + 140}, {x + m * 65, y + 140}, {x + m * 65, y + 160}, {x + m * 5, y + 160}}, {43, 221, 207});
     polygon({{x + m * 5, y + 160}, {x + m * 65, y + 160}, {x + m * 65, y + 170}, {x + m * 5, y + 170}}, {34, 165, 146});
 
-    // Sixth Window
+    /// Sixth Window
     polygon({{x + m * 5, y + 180}, {x + m * 65, y + 180}, {x + m * 65, y + 200}, {x + m * 5, y + 200}}, {45, 87, 135});
     polygon({{x + m * 5, y + 200}, {x + m * 65, y + 200}, {x + m * 65, y + 210}, {x + m * 5, y + 210}}, {32, 62, 97});
 
@@ -1666,6 +1669,57 @@ void SignBoard13(float x, float y, Color light = {110, 115, 153}){
     polygon({{x - 10 , y + 30}, {x + 15, y + 30}, {x + 15, y + 40}, {x + 10, y + 40}, {x + 10, y + 25}, {x - 10, y + 25}}, {114, 195, 204});
 }
 
+void Rain(float x, float y, Color shadow = {197, 255, 248}, int alpha = 50){
+
+    glPushMatrix();
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    setGLColorWithAlpha(shadow, alpha);
+    int numLines = 10; // Number of lines
+    int xIncrement = 20; // Distance between lines along the x-axis
+        int numPolygons = 10; // Number of polygons per line
+    int yIncrement = 180; // Distance between polygons along the y-axis
+
+    for (int line = 0; line < numLines; ++line) {
+        for (int i = 0; i < numPolygons; ++i) {
+            glBegin(GL_POLYGON);
+
+            int startX = line * (numPolygons * xIncrement); // Adjust this for proper spacing
+            int startY = i * yIncrement;
+
+            glVertex2f(x + startX, y + startY);
+            glVertex2f(x + 2 + startX, y + startY);
+            glVertex2f(x + 2 + startX, y + 70 + startY);
+            glVertex2f(x + startX, y + 70 + startY);
+
+            glEnd();
+        }
+    }
+    glDisable(GL_BLEND);
+    glPopMatrix();
+}
+
+/// Timer Function for updating First Carrier Positions
+void updateRain(int value) {
+    if(rainPosition > - 80){
+        rainPosition -= 2;
+    }
+    else{
+        rainPosition = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(1, updateRain, 0);
+}
+
+void moveRain(){
+    glPushMatrix();
+    Rain(10, rainPosition + 10);
+    Rain(100, rainPosition + 40);
+    glPopMatrix();
+}
+
 
 
 /// Initializing all Clouds
@@ -1804,6 +1858,11 @@ void display()
     SignBoard2(185, 335);
     SignBoard13(1705, 315);
 
+    /// Rain
+    if(night){
+        if(rain) moveRain();
+    }
+
     glFlush();
     glutSwapBuffers();
 }
@@ -1830,6 +1889,16 @@ void keyboard(unsigned char key, int x, int y){
     case '4': /// for turning off laser at night
         laser = false;
     break;
+    case '5': /// for turning on rain at night
+        rain = true;
+        rainSound = true;
+        sndPlaySound("rain.wav", SND_ASYNC | SND_LOOP);
+        break;
+    case '6': /// for turning off rain at night
+        rain = false;
+        rainSound = false;
+        sndPlaySound(NULL, SND_ASYNC | SND_LOOP);
+    break;
     case 27:
         exit(0);
         break;
@@ -1847,6 +1916,7 @@ void updates(){
     glutTimerFunc(100, updateLights2, 0);
     glutTimerFunc(100, updateLights3, 0);
     glutTimerFunc(50, updateLaserObjects, 0);
+    glutTimerFunc(1, updateRain, 0);
 }
 
 void init(void)
