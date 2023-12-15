@@ -8,7 +8,7 @@
 using namespace std;
 
 /// Boolean Variables
-bool day = false, night = true;
+bool day = false, night = true, signBoard = false;
 
 /// Float Variables for Translation
 float cloudTime1 = 0;
@@ -16,6 +16,10 @@ float cloudTime2 = 0;
 float planePosition = 3600;
 float carrierPosition = 00;
 float carrierTwoPosition = 400;
+float GhostPosition = 1;
+float DonutePosition = 0;
+float objectPositionX = 0;
+float objectPositionY = 0;
 
 /// Defining Color for Objects
 struct Color
@@ -471,6 +475,132 @@ void Building_One(float x, float y, int m = 1, Color Pillar = {135, 82, 214}, Co
 
 }
 
+/// Signboard's Ghost
+void Ghost(float x, float y, Color Body = {218, 78, 209}){
+    polygon({{x + 0, y + 0}, {x + 3, y + 0}, {x + 3, y + 15}, {x + 0, y + 15}}, Body);
+    polygon({{x + 3, y + 15}, {x + 6, y + 15}, {x + 6, y + 20}, {x + 3, y + 20}}, Body);
+    polygon({{x + 6, y + 20}, {x + 15, y + 20}, {x + 15, y + 23}, {x + 6, y + 23}}, Body);
+    polygon({{x + 15, y + 15}, {x + 18, y + 15}, {x + 18, y + 20}, {x + 15, y + 20}}, Body);
+    polygon({{x + 18, y + 0}, {x + 21, y + 0}, {x + 21, y + 15}, {x + 18, y + 15}}, Body);
+
+    // Eyes
+    polygon({{x + 6, y + 9}, {x + 9, y + 9}, {x + 9, y + 12}, {x + 6, y + 12}}, Body);
+    polygon({{x + 12, y + 9}, {x + 15, y + 9}, {x + 15, y + 12}, {x + 12, y + 12}}, Body);
+
+    // Legs
+    polygon({{x + 3, y + 0}, {x + 6, y + 0}, {x + 6, y + 3}, {x + 3, y + 3}}, Body);
+    polygon({{x + 6, y + 3}, {x + 9, y + 3}, {x + 9, y + 6}, {x + 6, y + 6}}, Body);
+    polygon({{x + 9, y + 0}, {x + 12, y + 0}, {x + 12, y + 3}, {x + 9, y + 3}}, Body);
+    polygon({{x + 12, y + 3}, {x + 15, y + 3}, {x + 15, y + 6}, {x + 12, y + 6}}, Body);
+    polygon({{x + 15, y + 0}, {x + 18, y + 0}, {x + 18, y + 3}, {x + 15, y + 3}}, Body);
+}
+
+/// Timer Function for making the Ghost Translate on Y-axis
+void moveGhost(){
+    glPushMatrix();
+    if(night) if(signBoard) Ghost(-5 + 32, 510 + 60 + GhostPosition);
+    glPopMatrix();
+}
+
+void updateGhost(int value) {
+    if(GhostPosition < 2){
+        GhostPosition += 1;
+    }
+    else{
+        GhostPosition = 1;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(200, updateGhost, 0);
+}
+
+/// Signboard's Donute
+void SignBoard_Donute(float x, float y, Color Donute = {218, 78, 209}){
+    polygon({{x + 2, y + 0}, {x + 7, y + 0}, {x + 7, y + 2}, {x + 2, y + 2}}, Donute);
+    polygon({{x + 0, y + 2}, {x + 2, y + 2}, {x + 2, y + 9}, {x + 0, y + 9}}, Donute);
+    polygon({{x + 7, y + 2}, {x + 9, y + 2}, {x + 7, y + 9}, {x + 9, y + 9}}, Donute);
+    polygon({{x + 2, y + 9}, {x + 7, y + 9}, {x + 7, y + 11}, {x + 2, y + 11}}, Donute);
+}
+
+/// Timer Function for making the Donutes Translate on Y-axis
+void updateDonute(int value) {
+    if(DonutePosition > -10){
+        DonutePosition -= 2;
+    }
+    else{
+        DonutePosition = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(50, updateDonute, 0);
+}
+
+/// Building One's Signboard
+void Building_One_SignBoard(float x, float y, Color shadow = {19, 23, 69}, Color light = {244, 29, 27}){
+    /// Polls
+    polygon({{x + 5, y + 0}, {x + 10, y + 0}, {x + 10, y + 35}, {x + 5, y + 35}}, shadow);
+    polygon({{x + 85, y + 0}, {x + 90, y + 0}, {x + 90, y + 35}, {x + 85, y + 35}}, shadow);
+
+    /// Layer One
+    if(night) if(signBoard) polygon({{x - 10, y + 35}, {x + 105, y + 35}, {x + 105, y + 90}, {x - 10, y + 90}}, {77, 104, 159});
+
+    /// Layer Two
+    polygon({{x - 5, y + 40}, {x + 100, y + 40}, {x + 100, y + 85}, {x - 5, y + 85}}, {103, 152, 191});
+
+    /// Layer Three
+    if(night) if(signBoard) polygon({{x - 2, y + 43}, {x + 97, y + 43}, {x + 97, y + 82}, {x - 2, y + 82}}, {79, 211, 217});
+
+    /// Layer Four
+    polygon({{x, y + 45}, {x + 95, y + 45}, {x + 95, y + 80}, {x, y + 80}}, {103, 152, 191});
+
+    /// Layer Five
+    polygon({{x + 2, y + 47}, {x + 93, y + 47}, {x + 93, y + 78}, {x + 2, y + 78}}, {19, 23, 69});
+}
+
+/// Initializing Signboard
+void SignBoard(float x, float y){
+    Building_One_SignBoard(x + 25, y + 10);
+    if(signBoard){
+        if(night){
+            SignBoard_Donute(x + 60 + DonutePosition, y + 65, {218, 78, 209});
+            SignBoard_Donute(x + 75 + DonutePosition, y + 67, {250, 254, 124});
+            SignBoard_Donute(x + 90 + DonutePosition, y + 65, {218, 78, 209});
+            SignBoard_Donute(x + 105 + DonutePosition, y + 67, {250, 254, 124});
+        }
+    }
+}
+
+/// Building One Network Tower
+void NetworkTower(float x, float y, Color shadow = {19, 23, 69}, Color light = {244, 29, 27}){
+
+    polygon({{x + 25, y}, {x + 30, y}, {x + 30, y + 15}, {x + 25, y + 15}}, shadow);
+    if(night) polygon({{x + 24, y + 15}, {x + 31, y + 15}, {x + 31, y + 20}, {x + 24, y + 20}}, light);
+
+    polygon({{x + 30, y}, {x + 50, y}, {x + 50, y + 10}, {x + 30, y + 10}}, shadow);
+
+    polygon({{x + 50, y}, {x + 55, y}, {x + 55, y + 20}, {x + 50, y + 20}}, shadow);
+
+    polygon({{x + 65, y}, {x + 70, y}, {x + 70, y + 10}, {x + 65, y + 10}}, shadow);
+}
+
+/// Building One's Terrace
+void Building_One_Terrace(float x, float y){
+    polygon({{x + 20, y}, {x + 75, y}, {x + 75, y + 5}, {x + 20, y + 5}}, {122, 165, 198});
+    polygon({{x + 20, y + 5}, {x + 75, y + 5}, {x + 75, y + 10}, {x + 20, y + 10}}, {155, 204, 239});
+
+    polygon({{x + 75, y}, {x + 130, y}, {x + 130, y + 5}, {x + 75, y + 5}}, {78, 105, 131});
+    polygon({{x + 75, y + 5}, {x + 130, y + 5}, {x + 130, y + 10}, {x + 75, y + 10}}, {90, 125, 149});
+
+    NetworkTower(x + 20, y + 10);
+}
+
+void LaserObjects(float x, float y, Color body = {97, 252, 254}){
+    polygon({{x + 20, y + 10 + objectPositionY}, {x + 25, y + 10 + objectPositionY}, {x + 25, y + 15 + objectPositionY}, {x + 20, y + 15 + objectPositionY}}, body);
+    polygon({{x + 30, y + 20 - objectPositionY}, {x + 35, y + 20 - objectPositionY}, {x + 35, y + 25 - objectPositionY}, {x + 30, y + 25 - objectPositionY}}, body);
+    polygon({{x + 25, y + 40 + objectPositionY}, {x + 30, y + 40 + objectPositionY}, {x + 30, y + 45 + objectPositionY}, {x + 25, y + 45 + objectPositionY}}, body);
+    polygon({{x + 20, y + 50 - objectPositionY}, {x + 25, y + 50 - objectPositionY}, {x + 25, y + 55 - objectPositionY}, {x + 20, y + 55 - objectPositionY}}, body);
+}
+
 /// Initializing all Clouds
 void drawClouds(){
     cloud3();
@@ -480,23 +610,26 @@ void drawClouds(){
 
 /// Initializing Buildings
 void Building(){
-    // Building One
+    /// Building One
     Building_One(0, 0);
     polygon({{0, 250}, {0, 255}, {140,255}, {140, 250}}, {0, 0, 0});
     Building_One(0, 255);
+    Building_One_Terrace(-5, 510);
+    SignBoard(-5, 510);
 
 
-    // Building Eight
+    /// Building Eight
     Building_One(700, 0);
 
-    // Building Twelve
+    /// Building Twelve
     Building_One(1380, 0);
     polygon({{1420, 250}, {1500, 250}, {1500, 260}, {1420, 260}}, {19, 23, 69});
     polygon({{1400, 260}, {1500, 260}, {1500, 290}, {1400, 290}}, {19, 23, 69});
 
-    // Thirteenth Building
+    /// Building Thirteen
     Building_One(1500, 0);
     polygon({{1505, 250}, {1505, 255}, {1640,255}, {1640, 250}}, {0, 0, 0});
+    Building_One_Terrace(1500, 510);
     Building_One(1500, 255);
 }
 
@@ -521,6 +654,9 @@ void display()
     moveCarrer();
     moveCarrerTwo();
 
+    // Signboards
+    moveGhost();
+
     glFlush();
     glutSwapBuffers();
 }
@@ -535,6 +671,12 @@ void keyboard(unsigned char key, int x, int y){
         day = false;
         night = true;
         break;
+    case '1': /// for turning on signboard at night
+        signBoard = true;
+        break;
+    case '2': /// for turning off signboard at night
+        signBoard = false;
+        break;
     case 27:
         exit(0);
         break;
@@ -546,6 +688,8 @@ void updates(){
     glutTimerFunc(100, updatePlane, 0);
     glutTimerFunc(100, updateCarrier, 0);
     glutTimerFunc(100, updateCarrierTwo, 0);
+    glutTimerFunc(100, updateGhost, 0);
+    glutTimerFunc(100, updateDonute, 0);
 }
 
 void init(void)
