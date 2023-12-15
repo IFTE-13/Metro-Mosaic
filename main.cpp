@@ -1498,6 +1498,54 @@ void Shadow_Building_Three(float x, float y, Color shadow = {19, 23, 69}){
     polygon({{x + 10, y + 300}, {x + 50, y + 300}, {x + 50, y + 310}, {x + 10, y + 310}}, shadow);
 }
 
+void Building_Tower(float x, float y, Color shadow = {19, 23, 69}, Color light = {130, 86, 199}, Color red = {244, 29, 27}, Color black = {19, 23, 69}, Color pole = {53, 41, 107}){
+    if(night){
+        light = {130, 86, 199};
+        shadow = {19, 23, 69};
+        pole = {53, 41, 107};
+    } else if (day){
+        light = {228, 143, 69};
+        shadow = {153, 77, 28};
+        pole = {107, 36, 12};
+    }
+    polygon({{x + -5, y}, {x + 70, y}, {x + 70, y + 15}, {x + -5, y + 15}}, light);
+    polygon({{x + 70, y}, {x + 145, y}, {x + 145, y + 15}, {x + 70, y + 15}}, shadow);
+
+    polygon({{x + -5, y + 15}, {x + 65, y + 15}, {x + 65, y + 30}, {x + -5, y + 30}}, light);
+    polygon({{x + 65, y + 15}, {x + 140, y + 15}, {x + 140, y + 30}, {x + 65, y + 30}}, shadow);
+
+    polygon({{x + -5, y + 30}, {x + 65, y + 30}, {x + 65, y + 45}, {x + -5, y + 45}}, light);
+    polygon({{x + 60, y + 30}, {x + 135, y + 30}, {x + 135, y + 45}, {x + 60, y + 45}}, shadow);
+
+    polygon({{x + -5, y + 45}, {x + 60, y + 45}, {x + 60, y + 60}, {x + -5, y + 60}}, light);
+    polygon({{x + 55, y + 45}, {x + 130, y + 45}, {x + 130, y + 60}, {x + 55, y + 60}}, shadow);
+
+    polygon({{x + -5, y + 60}, {x + 55, y + 60}, {x + 55, y + 75}, {x + -5, y + 75}}, light);
+    polygon({{x + 50, y + 60}, {x + 125, y + 60}, {x + 125, y + 75}, {x + 50, y + 75}}, shadow);
+
+    polygon({{x + 90, y + 15}, {x + 110, y + 15}, {x + 110, y + 90}, {x + 90, y + 90}}, pole);
+    polygon({{x + 85, y + 90}, {x + 110, y + 90}, {x + 100, y + 105}, {x + 75, y + 105}}, {40, 55, 76});
+    polygon({{x + 85, y + 15}, {x + 90, y + 15}, {x + 90, y + 95}, {x + 85, y + 95}}, light);
+    polygon({{x + 80, y + 30}, {x + 85, y + 30}, {x + 85, y + 105}, {x + 80, y + 105}}, light);
+    polygon({{x + 75, y + 45}, {x + 80, y + 45}, {x + 80, y + 110}, {x + 75, y + 110}}, light);
+
+    polygon({{x + 15, y + 75}, {x + 40, y + 75}, {x + 40, y + 125}, {x + 15, y + 125}}, light);
+    polygon({{x + 40, y + 75}, {x + 65, y + 75}, {x + 65, y + 110}, {x + 40, y + 110}}, shadow);
+
+    polygon({{x + 27, y + 120}, {x + 40, y + 120}, {x + 40, y + 125}, {x + 27, y + 125}}, black);
+    polygon({{x + 35, y + 125}, {x + 40, y + 125}, {x + 40, y + 135}, {x + 35, y + 135}}, black);
+    if(night) polygon({{x + 34, y + 135}, {x + 41, y + 135}, {x + 41, y + 140}, {x + 34, y + 140}}, red);
+
+    polygon({{x + 40, y + 90}, {x + 80, y + 90}, {x + 80, y + 110}, {x + 40, y + 110}}, light);
+    polygon({{x + 50, y + 105}, {x + 75, y + 105}, {x + 75, y + 110}, {x + 50, y + 110}}, black);
+    polygon({{x + 65, y + 80}, {x + 80, y + 80}, {x + 80, y + 90}, {x + 65, y + 90}}, light);
+    polygon({{x + 85, y + 95}, {x + 90, y + 95}, {x + 90, y + 100}, {x + 85, y + 100}}, black);
+
+    polygon({{x + 95, y + 95}, {x + 100, y + 95}, {x + 100, y + 120}, {x + 95, y + 120}}, black);
+    if(night) polygon({{x + 94, y + 120}, {x + 101, y + 120}, {x + 101, y + 125}, {x + 94, y + 125}}, red);
+}
+
+
 
 
 /// Initializing all Clouds
@@ -1552,6 +1600,13 @@ void Building(){
 
     /// Shadow Building Five
     polygon({{1080, 0}, {1080, 280}, {1200,280}, {1200, 0}}, {19, 23, 69});
+
+    /// Building Ten
+    glPushMatrix();
+    glScalef(1.2,1.4,0.0);
+    Building_Two(950, 0);
+    Building_Tower(950, 220);
+    glPopMatrix();
 
     /// Building Twelve
     Building_One(1380, 0);
