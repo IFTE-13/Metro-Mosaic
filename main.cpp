@@ -105,6 +105,13 @@ void Star(float x, float y, Color stars = {136, 139, 134}){
     polygon({{x + 0, y + 0}, {x + 5, y + 0}, {x + 5, y + 5}, {x + 0, y + 5}}, stars);
 }
 
+void Sun(float x, float y){
+    circle(x, y, 94, 94, {255, 173, 132});
+    circle(x, y, 93, 93, {255, 227, 130});
+    circle(x, y, 92, 92, {255, 196, 126});
+    circle(x, y, 91, 91, {255, 247, 138});
+}
+
 void Stars(){
     float arr[45][2] = {
         {150, 1000}, {250, 920}, {360, 970}, {400, 920}, {540, 950},
@@ -1772,6 +1779,9 @@ void display()
     if(night){
         Stars();
     }
+
+    /// Sun for evening
+    if(day){Sun(1000, 900);}
 
     /// Clouds
     drawClouds();
