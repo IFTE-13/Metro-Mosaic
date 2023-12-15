@@ -8,7 +8,7 @@
 using namespace std;
 
 /// Boolean Variables
-bool day = false, night = true, signBoard = false, on = true;
+bool day = false, night = true, signBoard = false, on = true, laser = false;
 
 /// Float Variables for Translation
 float cloudTime1 = 0;
@@ -1545,7 +1545,69 @@ void Building_Tower(float x, float y, Color shadow = {19, 23, 69}, Color light =
     if(night) polygon({{x + 94, y + 120}, {x + 101, y + 120}, {x + 101, y + 125}, {x + 94, y + 125}}, red);
 }
 
+void setGLColorWithAlpha(const Color& color, int alpha) {
+    glColor4ub(color.r, color.g, color.b, alpha);
+}
 
+void Laser(float x, float y, Color shadow = {97, 252, 254}, int alpha = 100){
+
+    glPushMatrix();
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    setGLColorWithAlpha(shadow, alpha);
+    glBegin(GL_POLYGON);
+    glVertex2f(x + 0, y + 0);
+    glVertex2f(x + 5, y + 0);
+    glVertex2f(x + 5, y + 600);
+    glVertex2f(x + 0, y + 600);
+    glEnd();
+
+    setGLColorWithAlpha({48, 122, 255}, alpha);
+    glBegin(GL_POLYGON);
+    glVertex2f(x + 5, y + 0);
+    glVertex2f(x + 45, y + 0);
+    glVertex2f(x + 45, y + 600);
+    glVertex2f(x + 5, y + 600);
+    glEnd();
+
+    setGLColorWithAlpha(shadow, alpha);
+    glBegin(GL_POLYGON);
+    glVertex2f(x + 45, y + 0);
+    glVertex2f(x + 50, y + 0);
+    glVertex2f(x + 50, y + 600);
+    glVertex2f(x + 45, y + 600);
+    glEnd();
+
+    glDisable(GL_BLEND);
+    glPopMatrix();
+}
+
+void LaserObjects(float x, float y, Color body = {97, 252, 254}){
+    polygon({{x + 20, y + 10 + objectPositionY}, {x + 25, y + 10 + objectPositionY}, {x + 25, y + 15 + objectPositionY}, {x + 20, y + 15 + objectPositionY}}, body);
+    polygon({{x + 30, y + 20 - objectPositionY}, {x + 35, y + 20 - objectPositionY}, {x + 35, y + 25 - objectPositionY}, {x + 30, y + 25 - objectPositionY}}, body);
+    polygon({{x + 25, y + 40 + objectPositionY}, {x + 30, y + 40 + objectPositionY}, {x + 30, y + 45 + objectPositionY}, {x + 25, y + 45 + objectPositionY}}, body);
+    polygon({{x + 20, y + 50 - objectPositionY}, {x + 25, y + 50 - objectPositionY}, {x + 25, y + 55 - objectPositionY}, {x + 20, y + 55 - objectPositionY}}, body);
+}
+
+void updateLaserObjects(int value) {
+    if(objectPositionX < 2000){
+        objectPositionX += 20;
+    }
+    else{
+        objectPositionX = 0;
+    }
+
+    if(objectPositionY < 10){
+        objectPositionY += 1;
+    }
+    else{
+        objectPositionY = 0;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(50, updateLaserObjects, 0);
+}
 
 
 /// Initializing all Clouds
@@ -1629,6 +1691,12 @@ void Building(){
     /// Fourteenth Building
     Building_Two(1600, 0);
     NetworkTowerTwo(1615, 220);
+    if(night) {
+        if(laser){
+            Laser(1775, 505);
+            LaserObjects(1775, 515 + objectPositionX);
+        }
+    }
 
     /// Building Fifteen
     Third_Building(1720, 0);
@@ -1691,6 +1759,12 @@ void keyboard(unsigned char key, int x, int y){
     case '2': /// for turning off signboard at night
         signBoard = false;
         break;
+    case '3': /// for turning on laser at night
+        laser = true;
+        break;
+    case '4': /// for turning off laser at night
+        laser = false;
+    break;
     case 27:
         exit(0);
         break;
@@ -1707,6 +1781,7 @@ void updates(){
     glutTimerFunc(100, updateLights, 0);
     glutTimerFunc(100, updateLights2, 0);
     glutTimerFunc(100, updateLights3, 0);
+    glutTimerFunc(50, updateLaserObjects, 0);
 }
 
 void init(void)
