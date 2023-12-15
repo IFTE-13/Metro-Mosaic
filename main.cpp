@@ -7,6 +7,9 @@
 
 using namespace std;
 
+/// Boolean Variables
+bool day = true, night = false;
+
 /// Defining Color for Objects
 struct Color
 {
@@ -75,6 +78,42 @@ void polygon(vector<pair<float, float>> coord, Color color = {255, 255, 255}, fl
     glEnd();
 }
 
+/// Sky Function
+void Sky(){
+    Color skyColor = {25, 19, 65};
+    if(night){
+        skyColor = {25, 19, 65};
+    } else if(day) {
+        skyColor = {245, 204, 160};
+    }
+    polygon({{0, 0}, {1920, 0}, {1920, 1080}, {0, 1080}}, skyColor);
+}
+
+void display()
+{
+   //sky
+    Sky();
+
+    glFlush();
+    glutSwapBuffers();
+}
+
+void keyboard(unsigned char key, int x, int y){
+    switch(key){
+    case 'd': /// for day
+        day = true;
+        night = false;
+        break;
+    case 'n': /// for night
+        day = false;
+        night = true;
+        break;
+    case 27:
+        exit(0);
+        break;
+    }
+}
+
 void init(void)
 {
     glClearColor(0.0F, 0.0F, 0.0F, 1);
@@ -89,7 +128,10 @@ int main(int argc, char **argv)
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_MULTISAMPLE);
     glutInitWindowPosition(0, 0);
     glutInitWindowSize(1920, 1080);
+    glutCreateWindow("Metro Mosaic");
+    glutKeyboardFunc(keyboard);
     glutFullScreen();
     init();
+    glutDisplayFunc(display);
     glutMainLoop();
 }
