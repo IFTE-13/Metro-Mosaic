@@ -13,6 +13,9 @@ bool day = false, night = true;
 /// Float Variables for Translation
 float cloudTime1 = 0;
 float cloudTime2 = 0;
+float planePosition = 3600;
+float carrierPosition = 00;
+float carrierTwoPosition = 400;
 
 /// Defining Color for Objects
 struct Color
@@ -197,6 +200,115 @@ void cloud3(){
     Clouds(-250, 480 + 20 * sin(cloudTime1), 10, cloud);
 }
 
+/// Plane Function
+void plane(float x, float y, Color window = {112, 146, 243}, Color body = {0, 0, 0}){
+        polygon({{x + 0, y + 0}, {x + 100, y + 0}, {x + 100, y + 15}, {x + 0, y + 15}}, body);
+        polygon({{x - 15, y + 0}, {x + 0, y + 0}, {x + 0, y + 15}, {x - 15, y + 15}}, {191, 205, 252});
+        polygon({{x - 10, y + 15}, {x + 0, y + 15}, {x + 0, y + 20}, {x - 10, y + 20}}, {191, 205, 252});
+
+        /// Windows
+        polygon({{x + 8, y + 5}, {x + 13, y + 5}, {x + 13, y + 10}, {x + 8, y + 10}}, window);
+        polygon({{x + 21, y + 5}, {x + 26, y + 5}, {x + 26, y + 10}, {x + 21, y + 10}}, window);
+        polygon({{x + 34, y + 5}, {x + 39, y + 5}, {x + 39, y + 10}, {x + 34, y + 10}}, window);
+        polygon({{x + 47, y + 5}, {x + 52, y + 5}, {x + 52, y + 10}, {x + 47, y + 10}}, window);
+        polygon({{x + 60, y + 5}, {x + 65, y + 5}, {x + 65, y + 10}, {x + 60, y + 10}}, window);
+        polygon({{x + 73, y + 5}, {x + 78, y + 5}, {x + 78, y + 10}, {x + 73, y + 10}}, window);
+
+        polygon({{x - 15, y + 0}, {x + 0, y + 0}, {x + 0, y + 5}, {x - 15, y + 5}}, body);
+        polygon({{x + 20, y + 15}, {x + 50, y + 15}, {x + 50, y + 20}, {x + 20, y + 20}}, body);
+        polygon({{x + 30, y + 20}, {x + 70, y + 20}, {x + 70, y + 25}, {x + 30, y + 25}}, body);
+        polygon({{x + 20, y + 0}, {x + 40, y + 0}, {x + 40, y - 5}, {x + 20, y - 5}}, body);
+        polygon({{x + 25, y - 5}, {x + 50, y - 5}, {x + 50, y - 10}, {x + 25, y - 10}}, body);
+        polygon({{x + 30, y - 10}, {x + 60, y - 10}, {x + 60, y - 15}, {x + 30, y - 15}}, body);
+
+        polygon({{x + 100, y + 3}, {x + 140, y + 3}, {x + 140, y + 7}, {x + 100, y + 7}}, {191, 205, 252});
+        polygon({{x + 100, y + 7}, {x + 160, y + 7}, {x + 160, y + 12}, {x + 100, y + 12}}, window);
+}
+
+/// Timer Function for updating Plane Positions
+void updatePlane(int value) {
+    if(planePosition > 0){
+        planePosition -= 50;
+    }
+    else{
+        planePosition = 40000;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(1, updatePlane, 0);
+}
+
+void movePlane(){
+    glPushMatrix();
+    glScalef(0.5, 0.5,0.0);
+    plane(planePosition, 1500);
+    glPopMatrix();
+}
+
+/// First Carrier Function
+void carrier(float x, float y, Color window = {227, 81, 144}, Color body = {0, 0, 0}){
+        polygon({{x + 0, y + 0}, {x + 100, y + 0}, {x + 100, y + 30}, {x + 0, y + 30}}, body);
+        polygon({{x + 85, y + 15}, {x + 100, y + 15}, {x + 100, y + 30}, {x + 85, y + 30}}, window);
+        polygon({{x + 50, y + 23}, {x + 80, y + 23}, {x + 80, y + 30}, {x + 50, y + 30}}, window);
+        polygon({{x + 10, y + 23}, {x + 40, y + 23}, {x + 40, y + 30}, {x + 10, y + 30}}, window);
+
+        /// Windows
+        polygon({{x + 10, y + 5}, {x + 20, y + 5}, {x + 20, y + 15}, {x + 10, y + 15}}, window);
+        polygon({{x + 30, y + 5}, {x + 40, y + 5}, {x + 40, y + 15}, {x + 30, y + 15}}, window);
+        polygon({{x + 50, y + 5}, {x + 60, y + 5}, {x + 60, y + 15}, {x + 50, y + 15}}, window);
+        polygon({{x + 70, y + 5}, {x + 80, y + 5}, {x + 80, y + 15}, {x + 70, y + 15}}, window);
+}
+
+/// Timer Function for updating First Carrier Positions
+void updateCarrier(int value) {
+    if(carrierPosition < 3780){
+        carrierPosition += 20;
+    }
+    else{
+        carrierPosition = -8000;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(1, updateCarrier, 0);
+}
+
+void moveCarrer(){
+    glPushMatrix();
+    glScalef(0.5, 0.5,0.0);
+    carrier(carrierPosition, 1000);
+    glPopMatrix();
+}
+
+/// Second Carrier Function
+void carrierTwo(float x, float y, Color window = {46, 190, 186}, Color body = {0, 0, 0}){
+        polygon({{x + 0, y + 0}, {x + 100, y + 0}, {x + 100, y + 30}, {x + 0, y + 30}}, body);
+        polygon({{x + 0, y + 15}, {x + 10, y + 15}, {x + 10, y + 25}, {x + 0, y + 25}}, window);
+        polygon({{x + 20, y + 20}, {x + 30, y + 20}, {x + 30, y + 25}, {x + 20, y + 25}}, window);
+        polygon({{x + 40, y + 20}, {x + 50, y + 20}, {x + 50, y + 25}, {x + 40, y + 25}}, window);
+        polygon({{x + 60, y + 20}, {x + 70, y + 20}, {x + 70, y + 25}, {x + 60, y + 25}}, window);
+        polygon({{x + 20, y + 10}, {x + 80, y + 10}, {x + 80, y + 15}, {x + 20, y + 15}}, {21, 107, 104});
+}
+
+/// Timer Function for updating Second Carrier Positions
+void updateCarrierTwo(int value) {
+    if(carrierTwoPosition > 0){
+        carrierTwoPosition -= 10;
+    }
+    else{
+        carrierTwoPosition = 5000;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(1, updateCarrierTwo, 0);
+}
+
+void moveCarrerTwo(){
+    glPushMatrix();
+    glScalef(0.5, 0.5,0.0);
+    carrierTwo(carrierTwoPosition, 550);
+    glPopMatrix();
+}
+
 /// Initializing all Clouds
 void drawClouds(){
     cloud3();
@@ -206,16 +318,21 @@ void drawClouds(){
 
 void display()
 {
-   //sky
+   /// Sky
     Sky();
 
-    // Stars
+    /// Stars
     if(night){
         Stars();
     }
 
-    // Clouds
+    /// Clouds
     drawClouds();
+
+    /// Plane and Carrier
+    movePlane();
+    moveCarrer();
+    moveCarrerTwo();
 
     glFlush();
     glutSwapBuffers();
@@ -239,6 +356,9 @@ void keyboard(unsigned char key, int x, int y){
 
 void updates(){
     glutTimerFunc(100, updateCloud, 0);
+    glutTimerFunc(100, updatePlane, 0);
+    glutTimerFunc(100, updateCarrier, 0);
+    glutTimerFunc(100, updateCarrierTwo, 0);
 }
 
 void init(void)
