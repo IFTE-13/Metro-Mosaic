@@ -1899,7 +1899,7 @@ void keyboard(unsigned char key, int x, int y){
     case '6': /// for turning off rain at night
         rain = false;
         rainSound = false;
-        sndPlaySound(NULL, SND_ASYNC | SND_LOOP);
+        sndPlaySound("night.wav", SND_ASYNC | SND_LOOP);
     break;
     case 27:
         exit(0);
