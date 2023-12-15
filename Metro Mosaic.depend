@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1702663958 source:c:\programming\c++\metro mosaic\main.cpp
+1702664485 source:c:\programming\c++\metro mosaic\main.cpp
 	<iostream>
 	<GL/freeglut.h>
 	<GL/gl.h>
