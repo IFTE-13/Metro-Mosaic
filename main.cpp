@@ -1613,6 +1613,10 @@ void Building(){
     polygon({{1420, 250}, {1500, 250}, {1500, 260}, {1420, 260}}, {19, 23, 69});
     polygon({{1400, 260}, {1500, 260}, {1500, 290}, {1400, 290}}, {19, 23, 69});
 
+    /// Building Eleven
+    Building_Two(1280, 0);
+    NetworkTowerTwo(1295, 220);
+
     /// Building Thirteen
     Building_One(1500, 0);
     polygon({{1505, 250}, {1505, 255}, {1640,255}, {1640, 250}}, {0, 0, 0});
@@ -1622,9 +1626,22 @@ void Building(){
     /// Shadow Building One
     Shadow_Building_One(1845, 85);
 
+    /// Fourteenth Building
+    Building_Two(1600, 0);
+    NetworkTowerTwo(1615, 220);
+
     /// Building Fifteen
     Third_Building(1720, 0);
     NetworkTowerThree(1750, 505);
+
+    /// Building Four
+    Tomb(320, 0);
+
+    /// Building Nine
+    Tomb(1070, 0);
+
+    /// Building Sixteen
+    Tomb(1850, 0);
 }
 
 void display()
@@ -1653,15 +1670,6 @@ void display()
 
     /// Buildings Window Light Toggle
     LightOnOff();
-
-    /// Building Four
-    Tomb(320, 0);
-
-    /// Building Nine
-    Tomb(1070, 0);
-
-    /// Building Sixteen
-    Tomb(1850, 0);
 
     glFlush();
     glutSwapBuffers();
