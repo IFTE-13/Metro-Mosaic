@@ -10,6 +10,10 @@ using namespace std;
 /// Boolean Variables
 bool day = false, night = true;
 
+/// Float Variables for Translation
+float cloudTime1 = 0;
+float cloudTime2 = 0;
+
 /// Defining Color for Objects
 struct Color
 {
@@ -113,6 +117,93 @@ void Stars(){
     }
 }
 
+/// Cloud Function
+void Clouds(float Tx, float Ty, float s, Color color){
+    /// Left Portion
+    circle(Tx + s * 2, Ty + s * 30, 60, 60, color);
+    circle(Tx + s * 13, Ty + s * 22, 93, 93, color);
+    circle(Tx + s * 24, Ty + s * 24, 83, 90, color);
+    circle(Tx + s * 40, Ty + s * 32, 120, 120, color);
+    circle(Tx + s * 54, Ty + s * 36, 77, 70, color);
+    circle(Tx + s * 60, Ty + s * 30, 77, 70, color);
+    circle(Tx + s * 66, Ty + s * 40, 77, 84, color);
+    circle(Tx + s * 74, Ty + s * 40, 100, 100, color);
+    circle(Tx + s * 85, Ty + s * 37, 77, 84, color);
+    circle(Tx + s * 85, Ty + s * 32, 77, 84, color);
+    circle(Tx + s * 95, Ty + s * 40, 107, 100, color);
+    circle(Tx + s * 108, Ty + s * 34, 67, 60, color);
+    circle(Tx + s * 122, Ty + s * 31, 100, 100, color);
+    circle(Tx + s * 132, Ty + s * 25, 100, 100, color);
+    circle(Tx + s * 144, Ty + s * 16, 60, 60, color);
+
+    /// Quads for filling the empty portion
+    quad({{0, -10}, {220, -10}, {220, 25}, {0, 25}}, color, Tx, Ty, s);
+    quad({{25, 10}, {220, 10}, {220, 32}, {25, 32}}, color, Tx, Ty, s);
+
+    /// Right Portion
+    circle(Tx + s * 102, Ty + s * 30, 60, 60, color);
+    circle(Tx + s * 113, Ty + s * 16, 93, 93, color);
+    circle(Tx + s * 124, Ty + s * 24, 83, 90, color);
+    circle(Tx + s * 140, Ty + s * 32, 120, 120, color);
+    circle(Tx + s * 154, Ty + s * 36, 77, 70, color);
+    circle(Tx + s * 160, Ty + s * 30, 77, 70, color);
+    circle(Tx + s * 166, Ty + s * 40, 77, 84, color);
+    circle(Tx + s * 174, Ty + s * 40, 100, 100, color);
+    circle(Tx + s * 185, Ty + s * 37, 77, 84, color);
+    circle(Tx + s * 185, Ty + s * 32, 77, 84, color);
+    circle(Tx + s * 195, Ty + s * 40, 107, 100, color);
+    circle(Tx + s * 208, Ty + s * 34, 100, 100, color);
+    circle(Tx + s * 222, Ty + s * 31, 100, 100, color);
+    circle(Tx + s * 232, Ty + s * 25, 100, 100, color);
+    circle(Tx + s * 244, Ty + s * 16, 60, 60, color);
+
+}
+
+/// Timer Function for updating Cloud Positions
+void updateCloud(int value) {
+    cloudTime1 += 0.01;
+    cloudTime2 -= 0.01;
+    glutPostRedisplay();
+    glutTimerFunc(16, updateCloud, 10);
+}
+
+void cloud1() {
+    Color cloud = {114, 80, 203};
+    if(night){
+        cloud = {114, 80, 203};
+    } else if(day){
+        cloud = {228, 123, 50};
+    }
+    Clouds(0, 100 + 20 * sin(cloudTime1), 10, cloud);
+}
+
+void cloud2(){
+    Color cloud = {53, 41, 107};
+    if(night){
+        cloud = {53, 41, 107};
+    } else if(day){
+        cloud = {153, 77, 28};
+    }
+    Clouds(-100, 285 + 20 * sin(cloudTime2), 10, cloud);
+}
+
+void cloud3(){
+    Color cloud = {36, 27, 82};
+    if(night){
+        cloud = {36, 27, 82};
+    } else if(day){
+        cloud = {107, 36, 12};
+    }
+    Clouds(-250, 480 + 20 * sin(cloudTime1), 10, cloud);
+}
+
+/// Initializing all Clouds
+void drawClouds(){
+    cloud3();
+    cloud2();
+    cloud1();
+}
+
 void display()
 {
    //sky
@@ -122,6 +213,9 @@ void display()
     if(night){
         Stars();
     }
+
+    // Clouds
+    drawClouds();
 
     glFlush();
     glutSwapBuffers();
@@ -143,6 +237,10 @@ void keyboard(unsigned char key, int x, int y){
     }
 }
 
+void updates(){
+    glutTimerFunc(100, updateCloud, 0);
+}
+
 void init(void)
 {
     glClearColor(0.0F, 0.0F, 0.0F, 1);
@@ -162,5 +260,6 @@ int main(int argc, char **argv)
     glutFullScreen();
     init();
     glutDisplayFunc(display);
+    updates();
     glutMainLoop();
 }
