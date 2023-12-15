@@ -1466,6 +1466,38 @@ void Eight_Building(float x, float y, int m = 1, Color buildingWall = {24, 31, 6
     polygon({{x + m * 170, y + 232}, {x + m * 200, y + 232}, {x + m * 200, y + 240}, {x + m * 170, y + 240}}, SecondwindowDarkTop);
 }
 
+void Shadow_Building_One(float x, float y, int m = 1, Color shadow = {19, 23, 69}){
+    polygon({{x + m * 0, y + 0}, {x + m * 60, y + 0}, {x + m * 60, y + 40}, {x + m * 0, y + 40}}, shadow);
+    polygon({{x + m * 0, y + 40}, {x + m * 45, y + 40}, {x + m * 45, y + 60}, {x + m * 0, y + 60}}, shadow);
+    polygon({{x + m * 0, y + 60}, {x + m * 30, y + 60}, {x + m * 30, y + 80}, {x + m * 0, y + 80}}, shadow);
+    polygon({{x + m * 15, y + 80}, {x + m * 25, y + 80}, {x + m * 25, y + 95}, {x + m * 15, y + 95}}, shadow);
+
+    polygon({{x + m * 70, y - 85}, {x + m * 80, y - 85}, {x + m * 80, y + 165}, {x + m * 70, y + 165}}, shadow);
+}
+
+void Shadow_Building_Three(float x, float y, Color shadow = {19, 23, 69}){
+    polygon({{x + 0, y + 0}, {x + 50, y + 0}, {x + 50, y + 130}, {x + 0, y + 130}}, shadow);
+    polygon({{x + 10, y + 60}, {x + 50, y + 60}, {x + 50, y + 245}, {x + 10, y + 245}}, shadow);
+
+    polygon({{x + 20, y + 245}, {x + 40, y + 245}, {x + 40, y + 250}, {x + 20, y + 250}}, shadow);
+    polygon({{x + 10, y + 250}, {x + 50, y + 250}, {x + 50, y + 255}, {x + 10, y + 255}}, shadow);
+
+    polygon({{x + 20, y + 255}, {x + 40, y + 255}, {x + 40, y + 260}, {x + 20, y + 260}}, shadow);
+    polygon({{x + 10, y + 260}, {x + 50, y + 260}, {x + 50, y + 265}, {x + 10, y + 265}}, shadow);
+
+    polygon({{x + 20, y + 265}, {x + 40, y + 265}, {x + 40, y + 270}, {x + 20, y + 270}}, shadow);
+    polygon({{x + 10, y + 270}, {x + 50, y + 270}, {x + 50, y + 275}, {x + 10, y + 275}}, shadow);
+
+    polygon({{x + 20, y + 275}, {x + 40, y + 275}, {x + 40, y + 280}, {x + 20, y + 280}}, shadow);
+    polygon({{x + 10, y + 280}, {x + 50, y + 280}, {x + 50, y + 285}, {x + 10, y + 285}}, shadow);
+
+    polygon({{x + 20, y + 285}, {x + 40, y + 285}, {x + 40, y + 290}, {x + 20, y + 290}}, shadow);
+    polygon({{x + 10, y + 290}, {x + 50, y + 290}, {x + 50, y + 295}, {x + 10, y + 295}}, shadow);
+
+    polygon({{x + 20, y + 295}, {x + 40, y + 295}, {x + 40, y + 300}, {x + 20, y + 300}}, shadow);
+    polygon({{x + 10, y + 300}, {x + 50, y + 300}, {x + 50, y + 310}, {x + 10, y + 310}}, shadow);
+}
+
 
 
 /// Initializing all Clouds
@@ -1488,6 +1520,9 @@ void Building(){
     Building_Two(100, 0);
     NetworkTowerTwo(100, 220);
 
+    /// Shadow Building One
+    Shadow_Building_One(335, 85);
+
     /// Building Three
     Third_Building(200, 0);
     NetworkTowerThree(230, 505);
@@ -1500,14 +1535,23 @@ void Building(){
     Building_Two(520, 0);
     NetworkTowerTwo(535, 220);
 
+    /// Shadow Building Three
+    Shadow_Building_Three(660, 0);
 
     /// Building Seven
     Building_One(700, 0);
+
+    /// Shadow Building Four
+    polygon({{840, 0}, {840, 120}, {860, 120}, {860, 0}}, {19, 23, 69});
+    polygon({{860, 0}, {860, 180}, {900, 180}, {900, 0}}, {19, 23, 69});
 
     /// Building Eight
     Eight_Building(900, 0);
     Building_Two(930, 255);
     NetworkTowerTwo(935, 475);
+
+    /// Shadow Building Five
+    polygon({{1080, 0}, {1080, 280}, {1200,280}, {1200, 0}}, {19, 23, 69});
 
     /// Building Twelve
     Building_One(1380, 0);
@@ -1519,6 +1563,9 @@ void Building(){
     polygon({{1505, 250}, {1505, 255}, {1640,255}, {1640, 250}}, {0, 0, 0});
     Building_One_Terrace(1500, 510);
     Building_One(1500, 255);
+
+    /// Shadow Building One
+    Shadow_Building_One(1845, 85);
 
     /// Building Fifteen
     Third_Building(1720, 0);
