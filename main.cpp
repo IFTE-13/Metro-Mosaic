@@ -8,7 +8,7 @@
 using namespace std;
 
 /// Boolean Variables
-bool day = true, night = false;
+bool day = false, night = true;
 
 /// Defining Color for Objects
 struct Color
@@ -89,10 +89,39 @@ void Sky(){
     polygon({{0, 0}, {1920, 0}, {1920, 1080}, {0, 1080}}, skyColor);
 }
 
+/// Star Function
+void Star(float x, float y, Color stars = {136, 139, 134}){
+    polygon({{x + 0, y + 0}, {x + 5, y + 0}, {x + 5, y + 5}, {x + 0, y + 5}}, stars);
+}
+
+void Stars(){
+    float arr[45][2] = {
+        {150, 1000}, {250, 920}, {360, 970}, {400, 920}, {540, 950},
+        {560, 980}, {710, 1000}, {720, 1030}, {810, 930}, {810, 940},
+        {820, 950}, {850, 1040}, {880, 920}, {920, 1020}, {970, 910},
+        {1000, 920}, {1000, 950}, {1100, 1030}, {1170, 920}, {1200, 910},
+        {1200, 930}, {1200, 1040}, {1280, 1050}, {1290, 1040}, {1310, 910},
+        {1370, 980}, {1400, 940}, {1400, 940}, {1450, 1030}, {1460, 950},
+        {1490, 930}, {1500, 1050}, {1640, 970}, {1660, 970}, {1780, 960},
+        {1790, 960}, {1810, 950}, {1880, 970}, {1930, 1050}, {1960, 970},
+        {1970, 1010}, {1980, 940}, {1980, 950}, {1990, 970}
+    };
+
+    /// Calls of Star function with coordinates
+    for (int i = 0; i < 45; ++i) {
+        Star(arr[i][0], arr[i][1]);
+    }
+}
+
 void display()
 {
    //sky
     Sky();
+
+    // Stars
+    if(night){
+        Stars();
+    }
 
     glFlush();
     glutSwapBuffers();
