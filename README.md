@@ -2,17 +2,17 @@
 Welcome to the City View project! This project is a visual representation of a cityscape built using C++ and GLUT (OpenGL Utility Toolkit). It showcases a basic city view with buildings, and other elements.
 
 ## ${\color{gray} Table\ of\ Contents}$
-* Introduction
-* Features
-* Installation
-* Usage
+* [Introduction](#introduction)
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
   - Key bindings for interactions
-* Overview
+* [Overview](#overview)
   - Night mode
   - Rain mode
   - Day mode
-* Contributing
-* License
+* [Contributing](#contributing)
+* [License](#license)
 
 ## ${\color{gray} Introduction}$
 This project aims to create a simple representation of a city using C++ and GLUT. It leverages the power of OpenGL to render a 3D city view environment, displaying buildings, and other objects.
@@ -26,7 +26,11 @@ This project aims to create a simple representation of a city using C++ and GLUT
 ## ${\color{gray} Installation}$
 To run this project locally, follow these steps:
 
-* Clone the Repository: git clone https://github.com/your-username/city-view.git
+* Clone the Repository:
+  
+  ```bash
+  git clone https://github.com/your-username/city-view.git
+  ```
 * Build the Project: Use your preferred C++ compiler and ensure GLUT is properly linked.
 * Run the Executable: Execute the generated executable file.
 > [!IMPORTANT]
@@ -36,14 +40,18 @@ To run this project locally, follow these steps:
 After installation, execute the program to view the cityscape. If there are any interactive elements, follow on-screen prompts or controls (if available) to interact with the city view.
 
 #### Key bindings for interactions
-- d » **Day** Mode
-- n » **Night** Mode
-- 1 » Ghost eating doughnut signboard **enable**
-- 2 » Ghost eating doughnut signboard **disable**
-- 3 » Laser light **enable**
-- 4 » Laser light **disable**
-- 5 » **Active** rain
-- 6 » **Deactive** rain
+
+| Key | Action                                 |
+|-----|----------------------------------------|
+| d   | **Day** Mode                           |
+| n   | **Night** Mode                         |
+| 1   | Enable **Ghost Eating Doughnut** signboard |
+| 2   | Disable **Ghost Eating Doughnut** signboard|
+| 3   | Enable **Laser Light**                 |
+| 4   | Disable **Laser Light**                |
+| 5   | **Activate** Rain Mode                 |
+| 6   | **Deactivate** Rain Mode               |
+
 
 ## ${\color{gray} Overview}$
 #### Night Mode
